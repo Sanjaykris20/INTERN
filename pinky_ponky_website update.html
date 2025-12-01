@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinky Ponky - Mother & Baby Needs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        header {
+            background: linear-gradient(135deg, #e91e63 0%, #d81b60 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            animation: slideDown 0.5s ease-out;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        .logo-cloud {
+            background: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px 50px 50px 0;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .logo-cloud::before,
+        .logo-cloud::after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .logo-cloud::before {
+            width: 40px;
+            height: 40px;
+            top: -15px;
+            left: 20px;
+        }
+
+        .logo-cloud::after {
+            width: 50px;
+            height: 50px;
+            top: -20px;
+            right: 30px;
+        }
+
+        .logo-text {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #e91e63;
+            font-family: 'Comic Sans MS', cursive;
+            display: block;
+            line-height: 1;
+        }
+
+        .logo-tagline {
+            font-size: 0.8rem;
+            color: #00bcd4;
+            font-style: italic;
+            display: block;
+        }
+
+        .logo-animals {
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            z-index: 2;
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #e91e63 0%, #d81b60 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            animation: fadeIn 1s ease-out 0.2s backwards;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease-out 0.4s backwards;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: #00bcd4;
+            font-style: italic;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .cta-button {
+            background: white;
+            color: #e91e63;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            animation: fadeIn 1s ease-out 0.6s backwards;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .about {
+            background: #f9f9f9;
+        }
+
+        .about h2 {
+            color: #e91e63;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .about p {
+            font-size: 1.1rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(233,30,99,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 12px 24px rgba(233,30,99,0.3);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .feature-card h3 {
+            color: #e91e63;
+            margin-bottom: 1rem;
+        }
+
+        .contact-section {
+            background: white;
+        }
+
+        .contact-section h2 {
+            color: #e91e63;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-card {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 4px solid #e91e63;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .contact-card:hover {
+            background: white;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transform: translateX(10px);
+            border-left-width: 8px;
+        }
+
+        .contact-card h3 {
+            color: #e91e63;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-card p {
+            margin: 0.5rem 0;
+            color: #555;
+        }
+
+        .contact-card a {
+            color: #00bcd4;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .contact-card a:hover {
+            color: #e91e63;
+            padding-left: 5px;
+        }
+
+        .contact-card a::after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .contact-card a:hover::after {
+            opacity: 1;
+            right: -25px;
+        }
+
+        .gallery {
+            background: #f9f9f9;
+        }
+
+        .gallery h2 {
+            color: #e91e63;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(233,30,99,0.9), transparent);
+            padding: 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-overlay h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .testimonial-section {
+            background: white;
+            padding: 3rem 0;
+        }
+
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .testimonial.active {
+            display: block;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #e91e63;
+        }
+
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .slider-btn {
+            background: #e91e63;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .slider-btn:hover {
+            background: #d81b60;
+            transform: scale(1.1);
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #e91e63;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+        }
+
+        .scroll-top:hover {
+            background: #d81b60;
+            transform: scale(1.1);
+        }
+
+        .map-container {
+            margin-top: 2rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            height: 400px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .map-container:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .map-placeholder {
+            text-align: center;
+            color: #666;
+        }
+
+        .map-placeholder h3 {
+            color: #e91e63;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo" onclick="showPage('home')">
+                <div class="logo-cloud">
+                    <div class="logo-animals">🦒🦘</div>
+                    <div class="logo-text">
+                        <span class="logo-brand">pinky ponky®</span>
+                        <span class="logo-tagline">Mother & Baby Needs</span>
+                    </div>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link active" onclick="showPage('home'); return false;">Home</a></li>
+                <li><a href="#" class="nav-link" onclick="showPage('contact'); return false;">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Pinky Ponky</h1>
+                <p class="tagline">Mother & Baby Needs</p>
+                <p>Your trusted destination for all mother and baby essentials in Chennai</p>
+                <button class="cta-button" onclick="showPage('contact')">Get In Touch</button>
+            </div>
+        </section>
+
+        <section class="about">
+            <div class="container">
+                <h2>Welcome to Pinky Ponky</h2>
+                <p>At Pinky Ponky, we understand the special bond between mothers and their babies. We provide a carefully curated selection of high-quality products to support you through every stage of your parenting journey.</p>
+                
+                <div class="features">
+                    <div class="feature-card" onclick="expandCard(this)">
+                        <div class="feature-icon">👶</div>
+                        <h3>Baby Essentials</h3>
+                        <p>Complete range of baby products including clothing, diapers, and care items</p>
+                    </div>
+                    <div class="feature-card" onclick="expandCard(this)">
+                        <div class="feature-icon">🤱</div>
+                        <h3>Mother Care</h3>
+                        <p>Special products designed for expecting and new mothers</p>
+                    </div>
+                    <div class="feature-card" onclick="expandCard(this)">
+                        <div class="feature-icon">🎁</div>
+                        <h3>Quality Products</h3>
+                        <p>Trusted brands and premium quality items for your little ones</p>
+                    </div>
+                    <div class="feature-card" onclick="expandCard(this)">
+                        <div class="feature-icon">❤️</div>
+                        <h3>Expert Guidance</h3>
+                        <p>Friendly staff ready to help you choose the right products</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="gallery">
+            <div class="container">
+                <h2>Our Products</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <div style="background: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 100%); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 4rem;">👶</div>
+                        <div class="gallery-overlay">
+                            <h3>Baby Clothing</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div style="background: linear-gradient(135deg, #E0BBE4 0%, #D5A6E1 100%); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 4rem;">🍼</div>
+                        <div class="gallery-overlay">
+                            <h3>Feeding Essentials</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div style="background: linear-gradient(135deg, #FFDAB9 0%, #FFE4B5 100%); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 4rem;">🛁</div>
+                        <div class="gallery-overlay">
+                            <h3>Bath & Care</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div style="background: linear-gradient(135deg, #B5E7A0 0%, #C1F0B0 100%); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 4rem;">🧸</div>
+                        <div class="gallery-overlay">
+                            <h3>Toys & Play</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonial-section">
+            <div class="container">
+                <h2 style="color: #e91e63; text-align: center; margin-bottom: 2rem;">What Our Customers Say</h2>
+                <div class="testimonial-slider">
+                    <div class="testimonial active">
+                        <p class="testimonial-text">"Pinky Ponky has everything I need for my baby! The staff is so helpful and the quality is excellent."</p>
+                        <p class="testimonial-author">- Priya S.</p>
+                    </div>
+                    <div class="testimonial">
+                        <p class="testimonial-text">"Best baby store in T.Nagar! Great collection and very reasonable prices."</p>
+                        <p class="testimonial-author">- Rajesh K.</p>
+                    </div>
+                    <div class="testimonial">
+                        <p class="testimonial-text">"I love shopping here! They have all the trusted brands and the service is wonderful."</p>
+                        <p class="testimonial-author">- Divya M.</p>
+                    </div>
+                </div>
+                <div class="slider-controls">
+                    <button class="slider-btn" onclick="changeTestimonial(-1)">← Previous</button>
+                    <button class="slider-btn" onclick="changeTestimonial(1)">Next →</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="contact" class="page">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Get In Touch</h1>
+                <p>Visit us or reach out - we're here to help!</p>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <div class="container">
+                <h2>Contact Information</h2>
+                
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <h3>📍 Visit Our Store</h3>
+                        <p><strong>Address:</strong></p>
+                        <p>New No. 43/1, Old 22/1</p>
+                        <p>Venkatnarayana Road</p>
+                        <p>T.Nagar, Chennai - 600 017</p>
+                    </div>
+
+                    <div class="contact-card">
+                        <h3>📞 Call Us</h3>
+                        <p><strong>Primary:</strong> <a href="tel:04444552474">044 - 455 244 74</a></p>
+                        <p><strong>Mobile:</strong> <a href="tel:9003126686">90031 26686</a></p>
+                        <p><strong>Mobile:</strong> <a href="tel:9003033888">90030 33888</a></p>
+                    </div>
+
+                    <div class="contact-card">
+                        <h3>✉️ Email Us</h3>
+                        <p><a href="mailto:pinkyponky_2016@yahoo.in">pinkyponky_2016@yahoo.in</a></p>
+                        <br>
+                        <h3>🌐 Website</h3>
+                        <p><a href="http://www.pinkyponky.info" target="_blank">www.pinkyponky.info</a></p>
+                    </div>
+
+                    <div class="contact-card">
+                        <h3>👤 Proprietor</h3>
+                        <p><strong>S. Jaffar Sadiq</strong></p>
+                        <br>
+                        <h3>🕒 Store Hours</h3>
+                        <p>Monday - Saturday: 10:00 AM - 8:00 PM</p>
+                        <p>Sunday: 10:00 AM - 6:00 PM</p>
+                    </div>
+                </div>
+
+                <div class="map-container" onclick="openMap()">
+                    <div class="map-placeholder">
+                        <h3>📍 Find Us on Map</h3>
+                        <p>New No. 43/1, Old 22/1<br>Venkatnarayana Road<br>T.Nagar, Chennai - 600 017</p>
+                        <p style="margin-top: 1rem; color: #e91e63; font-weight: bold;">Click to open in Google Maps</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Pinky Ponky - Mother & Baby Needs. All rights reserved.</p>
+        <p>T.Nagar, Chennai - 600 017</p>
+    </footer>
+
+    <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">↑</button>
+
+    <script>
+        let currentTestimonial = 0;
+
+        function showPage(pageName) {
+            const pages = document.querySelectorAll('.page');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            document.getElementById(pageName).classList.add('active');
+            event.target.classList.add('active');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function expandCard(card) {
+            card.style.animation = 'pulse 0.6s ease-in-out';
+            setTimeout(() => {
+                card.style.animation = '';
+            }, 600);
+        }
+
+        function changeTestimonial(direction) {
+            const testimonials = document.querySelectorAll('.testimonial');
+            testimonials[currentTestimonial].classList.remove('active');
+            
+            currentTestimonial += direction;
+            if (currentTestimonial >= testimonials.length) currentTestimonial = 0;
+            if (currentTestimonial < 0) currentTestimonial = testimonials.length - 1;
+            
+            testimonials[currentTestimonial].classList.add('active');
+        }
+
+        // Auto-rotate testimonials
+        setInterval(() => {
+            changeTestimonial(1);
+        }, 5000);
+
+        // Scroll to top button
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.getElementById('scrollTop');
+            if (window.pageYOffset > 300) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function openMap() {
+            window.open('https://www.google.com/maps/search/?api=1&query=Pinky+Ponky+Venkatnarayana+Road+T+Nagar+Chennai', '_blank');
+        }
+
+        // Add animation to features on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeIn 0.6s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.feature-card, .contact-card, .gallery-item');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.animationDelay = `${index * 0.1}s`;
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
